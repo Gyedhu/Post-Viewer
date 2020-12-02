@@ -1,5 +1,6 @@
 const emailInput = document.querySelector("#email");
 const submit = document.querySelector("#submit");
+const userList = document.querySelector("#userList");
 
 submit.onclick = async () => {
 
@@ -11,7 +12,6 @@ submit.onclick = async () => {
       const users = await response.json();
 
       let userData = users.filter(user => user.email === email);
-      userData = userData[0]; 
 
     } catch  {
       alert("Error");
