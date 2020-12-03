@@ -2,7 +2,71 @@ const emailInput = document.querySelector("#email");
 const submit = document.querySelector("#submit");
 const loading = document.querySelector("#loading");
 
+const form = document.querySelector(".container");
+const profileContainer = document.querySelector(".profile-container");
+const postContainer = document.querySelector(".post-box");
+
 let data = null;
+
+const loadPost = function (posts) {
+
+  for (let post of posts) {
+
+    const postBox = document.createElement("div");
+    postBox.classList.add("post");
+
+    let title = document.createElement("p");
+    title.innerText = post.title;
+    postBox.appendChild(title);
+
+    let content = document.createElement("p");
+    content.innerText = post.body;
+    postBox.appendChild(content);
+
+    postContainer.appendChild(postBox);
+  }
+
+}
+
+const fetchPost = async function () {
+  loading.style.top = "0";
+  loading.innerHTML = "Fetching posts";
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const posts = await response.json();
+
+    const userPost = posts.filter(post => post.userId = data.id);
+    loadPost(userPost);
+    loading.innerHTML = "Done";
+
+  } catch {
+    loading.innerHTML = "Error while fetching posts";
+  }
+  finally {
+    if (loading.innerHTML !== "Loading...") {
+      setTimeout(() =>
+        loading.style.top = "-100px",
+        2000
+      );
+    } else {
+      loading.style.top = "-100px";
+    }
+  }
+}
+
+const loadProfile = function () {
+  document.querySelector(".image").style.backgroundImage = "url('https://robohash.org/" + data.name + "')";
+  document.querySelector(".user-info p:nth-child(1)").innerHTML = data.name;
+  document.querySelector(".user-info p:nth-child(2)").innerHTML = data.email;
+  fetchPost();
+}
+
+const gotoProfile = function () {
+  form.style.display = "none";
+  profileContainer.style.display = "flex";
+
+  loadProfile();
+}
 
 submit.onclick = async () => {
 
@@ -20,10 +84,13 @@ submit.onclick = async () => {
 
       // getting user email
       let userData = users.filter(user => user.email === email);
-      userData = userData[0];
+      userData = userData[0]
 
       // checking user is available or not
-      if (userData) data = userData;
+      if (userData) {
+        data = userData;
+        gotoProfile();
+      }
       else loading.innerHTML = "No user record found";
     }
     catch {
@@ -33,7 +100,7 @@ submit.onclick = async () => {
       if (loading.innerHTML !== "Loading...") {
         setTimeout(() =>
           loading.style.top = "-100px",
-          3000
+          2000
         );
       } else {
         loading.style.top = "-100px";
@@ -48,8 +115,7 @@ submit.onclick = async () => {
       loading.style.top = "-100px"
       loading.innerHTML = "Loading..."
     },
-      3000
+      2000
     );
   }
-
-}
+}  
