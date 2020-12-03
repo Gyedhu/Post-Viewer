@@ -124,4 +124,6 @@ submit.onclick = async () => {
       2000
     );
   }
-}  
+}
+
+document.getElementById("go-button").onclick = gotoForm;

@@ -84,6 +84,7 @@ h1 {
   -webkit-transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
   transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
   width: 100%;
+  z-index: 1;
 }
 
 .header {
@@ -199,6 +200,33 @@ h1 {
   border-bottom: 1px solid #ccc;
   font-size: 20px;
   font-weight: bold;
+}
+
+#go-button {
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  background-color: #59886B;
+  border: 0;
+  border-radius: 50px;
+  color: #fefefe;
+  cursor: pointer;
+  outline: 0;
+  padding: 5px 20px;
+  margin: 10px 0;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+#go-button:active {
+  opacity: .2;
+}
+
+@media (max-width: 480px) {
+  #go-button {
+    bottom: 10px;
+    position: fixed;
+    right: 10px;
+  }
 }
 
 .footer {
