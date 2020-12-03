@@ -35,11 +35,12 @@ const fetchPost = async function () {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const posts = await response.json();
 
-    const userPost = posts.filter(post => post.userId = data.id);
+    const userPost = posts.filter(post => post.userId === data.id);
     loadPost(userPost);
     loading.innerHTML = "Done";
 
-  } catch {
+  } catch (error) {
+    console.log(error);
     loading.innerHTML = "Error while fetching posts";
   }
   finally {
@@ -59,6 +60,11 @@ const loadProfile = function () {
   document.querySelector(".user-info p:nth-child(1)").innerHTML = data.name;
   document.querySelector(".user-info p:nth-child(2)").innerHTML = data.email;
   fetchPost();
+}
+
+const gotoForm = function () {
+  form.style.display = "flex";
+  profileContainer.style.display = "none";
 }
 
 const gotoProfile = function () {
